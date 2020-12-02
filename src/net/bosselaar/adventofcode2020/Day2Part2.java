@@ -33,15 +33,8 @@ public class Day2Part2 {
             String letter = scanner.next();
             String password = scanner.next();
 
-            int found = 0;
-            if (min <= password.length() && password.charAt(min - 1) == letter.charAt(0)) {
-                found++;
-            }
-            if (max <= password.length() && password.charAt(max - 1) == letter.charAt(0)) {
-                found++;
-            }
-
-            return found == 1;
+            return (password.charAt(min - 1) == letter.charAt(0)) ^
+                (password.charAt(max - 1) == letter.charAt(0));
         }
     }
 }
