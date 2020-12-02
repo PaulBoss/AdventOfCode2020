@@ -6,15 +6,14 @@ import java.nio.file.Paths;
 import java.util.List;
 import java.util.Scanner;
 
-public class Day2 {
+public class Day2Part2 {
 
     public static void main(String[] args) throws IOException {
         List<String> lines = Files.readAllLines(Paths.get("./input/day2-1.txt"));
 
         int validCount = 0;
 
-
-        for (String line: lines) {
+        for (String line : lines) {
             if (isValidLine(line)) {
                 validCount++;
             }
@@ -24,6 +23,7 @@ public class Day2 {
     }
 
     public static boolean isValidLine(String line) {
+
         try (Scanner scanner = new Scanner(line)) {
             scanner.useDelimiter("-| |: ");
 
@@ -33,14 +33,15 @@ public class Day2 {
             String letter = scanner.next();
             String password = scanner.next();
 
-            int pos = -1;
-            int count = 0;
-            while ((pos = password.indexOf(letter, pos + 1)) > -1) {
-                count++;
+            int found = 0;
+            if (min <= password.length() && password.charAt(min - 1) == letter.charAt(0)) {
+                found++;
+            }
+            if (max <= password.length() && password.charAt(max - 1) == letter.charAt(0)) {
+                found++;
             }
 
-            return count >= min && count <= max;
+            return found == 1;
         }
-
     }
 }
