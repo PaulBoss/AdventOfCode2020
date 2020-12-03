@@ -11,9 +11,28 @@ public class Day3Part1 {
         List<String> lines = Files.readAllLines(Paths.get("./input/day3-1.txt"));
 
         part1(lines);
+        part2(lines);
     }
 
     public static void part1(List<String> lines) {
+        char[][] map = generateMap(lines);
+        int count = checkSlope(map, 3, 1);
+        System.out.println(count);
+    }
+
+    public static void part2(List<String> lines) {
+        char[][] map = generateMap(lines);
+
+        int count = checkSlope(map, 1, 1);
+        count = count * checkSlope(map, 3, 1);
+        count = count * checkSlope(map, 5, 1);
+        count = count * checkSlope(map, 7, 1);
+        count = count * checkSlope(map, 1, 2);
+
+        System.out.println(count);
+    }
+
+    private static char[][] generateMap(List<String> lines) {
         int width = lines.get(0).trim().length();
         int height = lines.size();
 
@@ -25,7 +44,13 @@ public class Day3Part1 {
                 map[x][y] = line.charAt(x);
             }
         }
+        return map;
+    }
 
+
+    private static int checkSlope(char[][] map, int slopeX, int slopeY) {
+        int width = map.length;
+        int height = map[0].length;
 
         int x = 0;
         int y = 0;
@@ -36,11 +61,10 @@ public class Day3Part1 {
                 count++;
             }
 
-            x = (x + 3) % width;
-            y = y + 1;
+            x = (x + slopeX) % width;
+            y = y + slopeY;
         }
-
-        System.out.print(count);
+        return count;
     }
 
 
